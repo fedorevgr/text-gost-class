@@ -1,0 +1,35 @@
+\RequirePackage{listings}
+\RequirePackage{listingsutf8}
+
+\lstset{ %
+  inputencoding=utf8,
+  basicstyle=\scriptsize, % размер и начертание шрифта для подсветки кода
+  numbers=left,               % где поставить нумерацию строк (слева\справа
+  numberstyle=\scriptsize,           % размер шрифта для номеров строк
+  stepnumber=1,                   % размер шага между двумя номерами строк
+  numbersep=5pt,                % как далеко отстоят номера строк от подсвечиваемого кода
+  showspaces=false,            % показывать или нет пробелы специальными отступами
+  showstringspaces=false,      % показывать или нет пробелы в строках
+  showtabs=true,             % показывать или нет табуляцию в строках
+  tab=\quad,
+  frame=single,              % рисовать рамку вокруг кода
+  tabsize=4,                 % размер табуляции по умолчанию равен 2 пробелам
+  captionpos=t,              % позиция заголовка вверху [t] или внизу [b] 
+  breaklines=true,           % автоматически переносить строки (да\нет)
+  breakatwhitespace=false, % переносить строки только если есть пробел
+  escapeinside={\#*}{*)},   % если нужно добавить комментарии в коде
+  abovecaptionskip=-5pt,
+  captionpos=b,
+  float=h!
+}
+
+% Мой листинг
+\newcommand{\includelistingstrict}[3]
+{
+
+	\lstinputlisting[
+		language={#2},
+		caption={#3},
+		label={lst:#1},
+	]{inc/lst/#1}
+}
