@@ -6,15 +6,31 @@
 \LoadClass[a4paper,oneside,14pt]{extreport}
 
 % Настройка кодировки и языков
-\RequirePackage[T1,T2A]{fontenc}
+\RequirePackage[T2A]{fontenc}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[english,russian]{babel}
 \RequirePackage{fix-cm}
+\RequirePackage{pgfplots}
+\RequirePackage{graphicx}
+\RequirePackage{tocloft}
+\RequirePackage{listings}
+\RequirePackage{caption}
+\RequirePackage{tempora}
+\RequirePackage{titlesec}
+\RequirePackage{pdfpages}
+\RequirePackage{enumerate,letltxmacro}
+\RequirePackage{threeparttable}
+\RequirePackage[unicode,hidelinks]{hyperref}
+\RequirePackage{flafter}
+\RequirePackage{enumitem}
+\RequirePackage{multirow}
+\RequirePackage[figure,table]{totalcount}
+\RequirePackage{lastpage}
 
 % Настройка полей
 \RequirePackage[
 	left=30mm,
-	right=15mm, 
+	right=10mm, 
 	top=20mm,
 	bottom=20mm,
 ]{geometry}
@@ -75,17 +91,29 @@
 \RequirePackage{amssymb}
 
 % Настройка библиографии
-\RequirePackage[
-	style=gost-numeric,
-	language=auto,
-	autolang=other,
-	sorting=none,
-]{biblatex}
-\RequirePackage{csquotes}
-\DeclareFieldFormat{urldate}{(дата обращения:\addspace\thefield{urlday}\adddot \thefield{urlmonth}\adddot\thefield{urlyear})}
+% \RequirePackage[
+% 	style=gost-numeric,
+% 	language=auto,
+% 	autolang=other,
+% 	sorting=none,
+% ]{biblatex}
+% \RequirePackage{csquotes}
+% \DeclareFieldFormat{urldate}{(дата обращения:\addspace\thefield{urlday}\adddot \thefield{urlmonth}\adddot\thefield{urlyear})}
+\RequirePackage{cite}
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1.}
+\makeatother
 
-% Подключение пакета гиперссылок
-\RequirePackage[unicode,hidelinks]{hyperref}
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumi}{\arabic{enumi}\text{)}}
+\renewcommand{\theenumii}{.\arabic{enumii}}
+\renewcommand{\labelenumii}{\asbuk{enumii}\text{)}}
+\renewcommand{\theenumiii}{.\arabic{enumiii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+
+\pgfplotsset{compat=newest}
+\pgfplotsset{width=0.85\linewidth, height=0.5\columnwidth}
 
 % Подключение пакета управляющих конструкций
 \RequirePackage{xifthen}
@@ -100,3 +128,4 @@
 \newcommand{\ssr}[1]{\begin{center}
 		\LARGE\bfseries{#1}
 	\end{center} \addcontentsline{toc}{chapter}{#1}  }
+
