@@ -129,3 +129,10 @@
 		\LARGE\bfseries{#1}
 	\end{center} \addcontentsline{toc}{chapter}{#1}  }
 
+\AtBeginDocument{
+  \def\labelitemi{---}
+  \setlist[itemize]{leftmargin=1.25cm, itemindent=0.76cm}
+  \setlist[enumerate]{leftmargin=1.25cm, itemindent=0.66cm}
+  \linespread{1.3}
+  \frenchspacing
+}
