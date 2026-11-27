@@ -9,7 +9,7 @@
 \RequirePackage[T2A]{fontenc}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[english,russian]{babel}
-\RequirePackage{fix-cm}
+%\RequirePackage{fix-cm}
 \RequirePackage{pgfplots}
 \RequirePackage{graphicx}
 \RequirePackage{tocloft}
@@ -30,7 +30,7 @@
 % Настройка полей
 \RequirePackage[
 	left=30mm,
-	right=10mm, 
+	right=15mm, 
 	top=20mm,
 	bottom=20mm,
 ]{geometry}
@@ -44,9 +44,12 @@
 \onehalfspacing
 
 % Настройка абзацного отступа
-\RequirePackage{indentfirst}
-\setlength{\parindent}{12.5mm}
-
+% \RequirePackage{indentfirst}
+%\setlength{\parindent}{12.5mm}
+\parindent=1.25cm
+\sloppy
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 % Настройка заголовков
 \makeatletter
 \renewcommand\LARGE{\@setfontsize\LARGE{22pt}{20}}
@@ -63,6 +66,20 @@
 \titlespacing{\section}{12.5mm}{10pt}{10pt}
 \titlespacing{\subsection}{12.5mm}{10pt}{10pt}
 \titlespacing{\subsubsection}{12.5mm}{10pt}{10pt}
+
+\renewcommand{\cfttoctitlefont}{\large\bfseries\centering}
+\renewcommand{\cftaftertoctitle}{\vspace{0pt}} % Убираем отступ после заголовка
+
+% Убираем большой отступ перед заголовком
+\setlength{\cftbeforetoctitleskip}{-22pt} % Такой же как у глав
+
+% Убираем отступы между заголовком и первым пунктом
+\setlength{\cftaftertoctitleskip}{0mm} % Минимальный отступ
+
+% Дополнительно: настройка отступов для пунктов содержания
+\setlength{\cftchapindent}{0pt} % Отступ для глав
+\setlength{\cftsecindent}{0pt}  % Отступ для разделов
+\setlength{\cftsubsecindent}{0pt}
 
 % Подключение пакета цветов
 \RequirePackage{xcolor}
@@ -89,6 +106,129 @@
 % Подключение математических пакетов
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
+\RequirePackage{siunitx}
+\sisetup{
+	round-mode          = places,
+	round-precision     = 2,
+}
+
+% Настройка TikZ и схем алгоритмов по ГОСТ 19.701-90
+\usetikzlibrary{arrows.meta, shapes.geometric, shapes.misc, positioning}
+\tikzset{
+	gostbase/.style={
+		draw=black,
+		thick,
+		fill=white,
+		align=center,
+		font=\scriptsize
+	},
+	gost_term/.style={
+		gostbase,
+		rounded rectangle,
+		rounded rectangle arc length=180,
+		minimum width=4.0cm,
+		text width=3.3cm,
+		minimum height=0.8cm
+	},
+	gost_proc/.style={
+		gostbase,
+		rectangle,
+		minimum width=4.0cm,
+		text width=3.6cm,
+		minimum height=0.85cm
+	},
+	gost_sub/.style={
+		gostbase,
+		rectangle,
+		minimum width=4.0cm,
+		text width=3.35cm,
+		minimum height=0.85cm,
+		path picture={
+			\draw[thick] ([xshift=0.18cm]path picture bounding box.north west) --
+			([xshift=0.18cm]path picture bounding box.south west);
+			\draw[thick] ([xshift=-0.18cm]path picture bounding box.north east) --
+			([xshift=-0.18cm]path picture bounding box.south east);
+		}
+	},
+	gost_io/.style={
+		gostbase,
+		trapezium,
+		trapezium left angle=75,
+		trapezium right angle=105,
+		minimum width=3.4cm,
+		text width=3.2cm,
+		minimum height=0.85cm
+	},
+	gost_dec/.style={
+		gostbase,
+		diamond,
+		aspect=2.3,
+		minimum width=4.0cm,
+		text width=2.55cm,
+		inner sep=1.5pt,
+		minimum height=1.15cm
+	},
+	gost_loop_start/.style={
+		gostbase,
+		chamfered rectangle,
+		chamfered rectangle corners={north west,north east},
+		chamfered rectangle xsep=0.22cm,
+		chamfered rectangle ysep=0.22cm,
+		minimum width=3.6cm,
+		text width=3.3cm,
+		minimum height=0.85cm
+	},
+	gost_loop_end/.style={
+		gostbase,
+		chamfered rectangle,
+		chamfered rectangle corners={south west,south east},
+		chamfered rectangle xsep=0.22cm,
+		chamfered rectangle ysep=0.22cm,
+		minimum width=3.6cm,
+		text width=3.3cm,
+		minimum height=0.75cm
+	},
+	gost_conn/.style={
+		gostbase,
+		circle,
+		minimum size=0.65cm,
+		inner sep=1pt
+	},
+	gost_arrow/.style={
+		thick,
+		-{Latex[length=2.2mm, width=1.5mm]}
+	},
+	gost_line/.style={
+		thick
+	},
+	arch_box/.style={
+		draw=black,
+		thick,
+		fill=white,
+		rectangle,
+		rounded corners=2pt,
+		align=center,
+		font=\scriptsize,
+		inner sep=5pt
+	}
+}
+
+% Язык Rust для listings
+\lstdefinelanguage{Rust}{
+	morekeywords=[1]{
+		as, async, await, break, const, continue, crate, dyn, else, enum,
+		extern, false, fn, for, if, impl, in, let, loop, match, mod, move,
+		mut, pub, ref, return, self, Self, static, struct, super, trait, true,
+		type, unsafe, use, where, while
+	},
+	morekeywords=[2]{
+		bool, char, f32, f64, i8, i16, i32, i64, i128, isize, str,
+		u8, u16, u32, u64, u128, usize, Vec, String, Option, Result, Box
+	},
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]",
+}
 
 % Настройка библиографии
 % \RequirePackage[
@@ -128,10 +268,15 @@
 \newcommand{\ssr}[1]{\begin{center}
 		\LARGE\bfseries{#1}
 	\end{center} \addcontentsline{toc}{chapter}{#1}  }
+    
+
 
 \AtBeginDocument{
   \def\labelitemi{---}
-  \setlist[itemize]{leftmargin=1.25cm, itemindent=0.76cm}
+  \def\labelitemii{---}
+  \def\labelitemiii{---}
+  \def\labelitemiv{---}
+  \setlist[itemize]{label=---, leftmargin=1.25cm, itemindent=0.76cm}
   \setlist[enumerate]{leftmargin=1.25cm, itemindent=0.66cm}
   \linespread{1.3}
   \frenchspacing
